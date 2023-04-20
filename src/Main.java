@@ -11,72 +11,74 @@ public class Main {
         Retrieval retrievalService = new RetrievalService(bookDb,logger);
 
         Library library = new Library(transactionService, retrievalService);
-        Scanner scanner = new Scanner(System.in);
+        try (Scanner scanner = new Scanner(System.in)) {
+            while (true) {
+                System.out.println("1. Add Book");
+                System.out.println("2. Remove Book");
+                System.out.println("3. Display Available Books");
+                System.out.println("4. Borrow book");
+                System.out.println("5. Return book");
+                System.out.println("6. Display borrowed books");
+                System.out.println("7. Display overdue books");
+                System.out.println("8. Exit");
 
-        while (true) {
-            System.out.println("1. Add Book");
-            System.out.println("2. Remove Book");
-            System.out.println("3. Display Available Books");
-            System.out.println("4. Borrow book");
-            System.out.println("5. Return book");
-            System.out.println("6. Display borrowed books");
-            System.out.println("7. Display overdue books");
-            System.out.println("8. Exit");
+                int choice = scanner.nextInt();
 
-            int choice = scanner.nextInt();
+                if (choice == 1) {
+                    scanner.nextLine(); // to consume the newline character
+                    System.out.print("Enter Id: ");
+                    String id = scanner.nextLine();
+                    System.out.print("Enter title: ");
+                    String title = scanner.nextLine();
+                    System.out.print("Enter author: ");
+                    String author = scanner.nextLine();
+                    System.out.print("Is browed ");
+                    boolean isBrowed = scanner.nextBoolean();
+                    int ID = Integer.parseInt(id);
+                    Book book1 = new Book(ID,title,author,isBrowed);
+                    library.addBook(book1);
+                }
+                else if (choice == 2) {
+                    scanner.nextLine(); // to consume the newline character
+                    System.out.print("Enter Id: ");
+                    String id = scanner.nextLine();
+                    int ID = Integer.parseInt(id);
+                    Book removeBook= library.getBookById(ID);
+                    library.removeBook(removeBook);
 
-            if (choice == 1) {
-                scanner.nextLine(); // to consume the newline character
-                System.out.print("Enter Id: ");
-                String id = scanner.nextLine();
-                System.out.print("Enter title: ");
-                String title = scanner.nextLine();
-                System.out.print("Enter author: ");
-                String author = scanner.nextLine();
-                System.out.print("Is browed ");
-                boolean isBrowed = scanner.nextBoolean();
-                int ID = Integer.parseInt(id);
-                Book book1 = new Book(ID,title,author,isBrowed);
-                library.addBook(book1);
-            }
-            else if (choice == 2) {
-                scanner.nextLine(); // to consume the newline character
-                System.out.print("Enter Id: ");
-                String id = scanner.nextLine();
-                int ID = Integer.parseInt(id);
-                Book removeBook= library.getBookById(ID);
-                library.removeBook(removeBook);
+                }
+                else if (choice == 3) {
+                     System.out.println("available books");
+                     System.out.println(library.availableBooks());
+                }
+                else if (choice == 4) {
+                    scanner.nextLine(); // to consume the newline character
+                    System.out.print("Enter Id: ");
+                    String id = scanner.nextLine();
+                    int ID = Integer.parseInt(id);
+                    Book browedBook= library.getBookById(ID);
+                    library.borrowBook(browedBook);
 
-            }
-            else if (choice == 3) {
-                 System.out.println("available books");
-                 System.out.println(library.availableBooks());
-            }
-            else if (choice == 4) {
-                scanner.nextLine(); // to consume the newline character
-                System.out.print("Enter Id: ");
-                String id = scanner.nextLine();
-                int ID = Integer.parseInt(id);
-                Book browedBook= library.getBookById(ID);
-                library.borrowBook(browedBook);
+                }
+                else if (choice == 5) {
+                    scanner.nextLine(); // to consume the newline character
+                    System.out.print("Enter Id: ");
+                    String id = scanner.nextLine();
+                    int ID = Integer.parseInt(id);
+                    Book returnBook= library.getBookById(ID);
+                    library.returnBook(returnBook);
 
+                }
+                else if (choice == 6) {
+                     System.out.println("borrowed books");
+                     System.out.println(library.borrowedBooks());
+                }
+                else if (choice == 8) {
+                    break;
+                }
             }
-            else if (choice == 5) {
-                scanner.nextLine(); // to consume the newline character
-                System.out.print("Enter Id: ");
-                String id = scanner.nextLine();
-                int ID = Integer.parseInt(id);
-                Book returnBook= library.getBookById(ID);
-                library.returnBook(returnBook);
-
-            }
-            else if (choice == 6) {
-                 System.out.println("borrowed books");
-                 System.out.println(library.borrowedBooks());
-            }
-            else if (choice == 8) {
-                break;
-            }
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
         }
     }
 }
