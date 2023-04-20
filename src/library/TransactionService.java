@@ -2,19 +2,17 @@ package library;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.logging.Logger;
 import java.util.ArrayList;
 /**
 This service class includes the functionalities for basic transactions with the library
  */
 public class TransactionService implements Transaction{
-
-    Logger logger = Logger.getLogger(TransactionService.class.getName());
-//    private final Db bookDb = Db.getInstance();
     private Db bookDb;
+    private Logger logger;
 
-    public TransactionService(Db bookDb) {
+    public TransactionService(Db bookDb, library.Logger logger) {
         this.bookDb = bookDb;
+        this.logger = logger;
     }
 
     /**

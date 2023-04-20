@@ -16,11 +16,7 @@ public class Logger {
         log(Level.INFO, message);
     }
 
-    public void warn(String message) {
-        log(Level.WARNING, message);
-    }
+    public void warn(String message) {log(Level.WARNING, message);}
 
-    public void error(String message) {
-        log(Level.SEVERE, message);
-    }
+    public void error(String message) {log(Level.SEVERE, message);}
 }

@@ -5,7 +5,7 @@ public class Main {
     public static void main(String[] args) {
         Logger logger = new Logger();
         Db bookDb = Db.getInstance();
-        Transaction transactionService = new TransactionService(bookDb);
+        Transaction transactionService = new TransactionService(bookDb,logger);
         Library library = new Library(transactionService);
 
         Book book1 = new Book(1,"title 1","author 1",false);
