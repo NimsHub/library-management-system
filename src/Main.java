@@ -3,9 +3,10 @@ import library.*;
 
 public class Main {
     public static void main(String[] args) {
-        Transaction transactionService = new TransactionService();
+        Logger logger = new Logger();
         Db bookDb = Db.getInstance();
-        Library library = new Library(transactionService,bookDb);
+        Transaction transactionService = new TransactionService(bookDb);
+        Library library = new Library(transactionService);
 
         Book book1 = new Book(1,"title 1","author 1",false);
         Book book2 = new Book(2,"title 2","author 2",false);

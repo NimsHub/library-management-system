@@ -10,7 +10,12 @@ This service class includes the functionalities for basic transactions with the 
 public class TransactionService implements Transaction{
 
     Logger logger = Logger.getLogger(TransactionService.class.getName());
-    private final Db bookDb = Db.getInstance();
+//    private final Db bookDb = Db.getInstance();
+    private Db bookDb;
+
+    public TransactionService(Db bookDb) {
+        this.bookDb = bookDb;
+    }
 
     /**
      *
