@@ -4,11 +4,10 @@ import java.util.List;
 
 public class Library {
     private final Transaction transactionService;
-    private Db booksDb;
-
-    public Library(Transaction transactionService, Db booksDb) {
+    private final Retrieval retrievalService;
+    public Library(Transaction transactionService, Retrieval retrievalService) {
         this.transactionService = transactionService;
-        this.booksDb = booksDb;
+        this.retrievalService = retrievalService;
     }
 
     public void addBook(Book book) {
@@ -28,10 +27,10 @@ public class Library {
     }
 
     public List<Book> availableBooks(){
-       return transactionService.availabeBooks();
+       return retrievalService.availableBooks();
     }
 
     public List<Book> borrowedBooks(){
-        return transactionService.borrowedBooks();
+        return retrievalService.borrowedBooks();
     }
 }
