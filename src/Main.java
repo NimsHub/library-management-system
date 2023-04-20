@@ -4,7 +4,7 @@ import library.*;
 public class Main {
     public static void main(String[] args) {
         Transaction transactionService = new TransactionService();
-        Db bookDb = new Db();
+        Db bookDb = Db.getInstance();
         Library library = new Library(transactionService,bookDb);
 
         Book book1 = new Book(1,"title 1","author 1",false);
