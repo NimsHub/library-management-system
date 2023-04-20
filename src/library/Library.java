@@ -4,11 +4,9 @@ import java.util.List;
 
 public class Library {
     private final Transaction transactionService;
-    private Db booksDb;
 
-    public Library(Transaction transactionService, Db booksDb) {
+    public Library(Transaction transactionService) {
         this.transactionService = transactionService;
-        this.booksDb = booksDb;
     }
 
     public void addBook(Book book) {
