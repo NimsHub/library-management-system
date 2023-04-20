@@ -1,6 +1,7 @@
 package library;
 
 import java.util.List;
+import java.util.Optional;
 
 public class RetrievalService implements Retrieval {
     private Db bookDb;
@@ -19,4 +20,13 @@ public class RetrievalService implements Retrieval {
     public List<Book> borrowedBooks() {
         return bookDb.books.stream().filter(Book::isBorrowed).toList();
     }
+
+    @Override
+    public Book getBookById(int id) {
+        Optional<Book> book = bookDb.books.stream()
+                .filter(a -> a.getId() == id)
+                .findFirst();
+        return book.orElse(null); // return the book if present, or null otherwise
+    }
+
 }

@@ -33,4 +33,9 @@ public class Library {
     public List<Book> borrowedBooks(){
         return retrievalService.borrowedBooks();
     }
+
+    public Book getBookById(int id) {
+       return retrievalService.getBookById(id);
+    }
+
 }

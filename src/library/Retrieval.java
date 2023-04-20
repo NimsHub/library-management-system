@@ -5,4 +5,5 @@ import java.util.List;
 public interface Retrieval {
     List<Book> availableBooks();
     List<Book> borrowedBooks();
+    Book getBookById(int id);
 }

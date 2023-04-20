@@ -1,5 +1,6 @@
 import library.*;
 
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
@@ -10,36 +11,72 @@ public class Main {
         Retrieval retrievalService = new RetrievalService(bookDb,logger);
 
         Library library = new Library(transactionService, retrievalService);
+        Scanner scanner = new Scanner(System.in);
 
-        Book book1 = new Book(1,"title 1","author 1",false);
-        Book book2 = new Book(2,"title 2","author 2",false);
-        Book book3 = new Book(3,"title 3","author 3",false);
-        Book book4 = new Book(4,"title 4","author 4",false);
-        Book book5 = new Book(5,"title 5","author 5",false);
+        while (true) {
+            System.out.println("1. Add Book");
+            System.out.println("2. Remove Book");
+            System.out.println("3. Display Available Books");
+            System.out.println("4. Borrow book");
+            System.out.println("5. Return book");
+            System.out.println("6. Display borrowed books");
+            System.out.println("7. Display overdue books");
+            System.out.println("8. Exit");
 
-        library.addBook(book1);
-        library.addBook(book2);
-        library.addBook(book3);
-        library.addBook(book4);
-        library.addBook(book5);
+            int choice = scanner.nextInt();
 
-        library.borrowBook(book1);
-        library.borrowBook(book2);
+            if (choice == 1) {
+                scanner.nextLine(); // to consume the newline character
+                System.out.print("Enter Id: ");
+                String id = scanner.nextLine();
+                System.out.print("Enter title: ");
+                String title = scanner.nextLine();
+                System.out.print("Enter author: ");
+                String author = scanner.nextLine();
+                System.out.print("Is browed ");
+                boolean isBrowed = scanner.nextBoolean();
+                int ID = Integer.parseInt(id);
+                Book book1 = new Book(ID,title,author,isBrowed);
+                library.addBook(book1);
+            }
+            else if (choice == 2) {
+                scanner.nextLine(); // to consume the newline character
+                System.out.print("Enter Id: ");
+                String id = scanner.nextLine();
+                int ID = Integer.parseInt(id);
+                Book removeBook= library.getBookById(ID);
+                library.removeBook(removeBook);
 
-        System.out.println("available books");
-        System.out.println(library.availableBooks());
+            }
+            else if (choice == 3) {
+                 System.out.println("available books");
+                 System.out.println(library.availableBooks());
+            }
+            else if (choice == 4) {
+                scanner.nextLine(); // to consume the newline character
+                System.out.print("Enter Id: ");
+                String id = scanner.nextLine();
+                int ID = Integer.parseInt(id);
+                Book browedBook= library.getBookById(ID);
+                library.borrowBook(browedBook);
 
-        System.out.println("borrowed books");
-        System.out.println(library.borrowedBooks());
+            }
+            else if (choice == 5) {
+                scanner.nextLine(); // to consume the newline character
+                System.out.print("Enter Id: ");
+                String id = scanner.nextLine();
+                int ID = Integer.parseInt(id);
+                Book returnBook= library.getBookById(ID);
+                library.returnBook(returnBook);
 
-        library.returnBook(book1);
-        System.out.println("available books");
-        System.out.println(library.availableBooks());
-
-        library.removeBook(book3);
-
-        System.out.println("available books");
-        System.out.println(library.availableBooks());
-
+            }
+            else if (choice == 6) {
+                 System.out.println("borrowed books");
+                 System.out.println(library.borrowedBooks());
+            }
+            else if (choice == 8) {
+                break;
+            }
+        }
     }
 }
