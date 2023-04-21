@@ -36,10 +36,6 @@ public class GuiCommands implements Commands {
         }
     }
 
-    public void refreshTable() {
-        availableBooks();
-        borrowedBooks();
-    }
     @Override
     public void removeBook() {
         int selectedRow = booksTable.getSelectedRow();
@@ -97,7 +93,8 @@ public class GuiCommands implements Commands {
 
         if (result == JOptionPane.YES_OPTION) {
             library.returnBook(bookId);
-            refreshTable();
+            availableBooks();
+            borrowedBooks();
         }
     }
 
