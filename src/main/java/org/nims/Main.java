@@ -8,7 +8,6 @@ public class Main {
         UserInterface commandLineUi = new CommandLineUI();
         commandLineUi.show();
 
-
 //        Logger logger = new Logger();
 //        BookRepository bookDb = BookRepository.getInstance();
 //        Transaction transactionService = new TransactionService(bookDb,logger);
