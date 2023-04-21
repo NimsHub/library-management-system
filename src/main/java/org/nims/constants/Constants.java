@@ -2,7 +2,7 @@ package org.nims.constants;
 
 public class Constants {
     public static final String
-            prompt = "\n\nCLI Prompts\n" +
+            PROMPT = "\n\nCLI Prompts\n" +
             "\n\t1. Add Book" +
             "\n\t2. Remove Book" +
             "\n\t3. Display Available Books" +

@@ -70,7 +70,7 @@ public class TransactionService implements Transaction {
     /**
      * This method illustrates returning borrowed book to the library
      *
-     * @param id
+     * @param id : Integer
      */
     @Override
     public void returnBook(Integer id) {

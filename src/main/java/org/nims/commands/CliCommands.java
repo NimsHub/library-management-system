@@ -22,13 +22,10 @@ public class CliCommands implements Commands{
     @Override
     public void addBook() {
         scanner.nextLine(); // to consume the newline character
-        System.out.print("Enter Id: ");
-        String idString = scanner.nextLine();
         System.out.print("Enter title: ");
         String title = scanner.nextLine();
         System.out.print("Enter author: ");
         String author = scanner.nextLine();
-        int id = Integer.parseInt(idString);
         library.addBook(title,author);
     }
 

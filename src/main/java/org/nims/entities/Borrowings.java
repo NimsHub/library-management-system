@@ -1,7 +1,5 @@
 package org.nims.entities;
 
-import org.nims.entities.Book;
-
 import java.time.LocalDate;
 
 public class Borrowings {

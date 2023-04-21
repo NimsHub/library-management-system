@@ -38,8 +38,5 @@ public class Library {
     public List<Borrowings> overdueBooks(){
         return transactionService.overdueBooks();
     }
-    public Book getBookById(int id) {
-        return transactionService.getBookById(id);
-    }
 }
 

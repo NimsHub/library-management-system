@@ -23,7 +23,7 @@ public class CLI implements UIContract {
 
         try {
             do {
-                logger.info(Constants.prompt);
+                logger.info(Constants.PROMPT);
                 choice = scanner.nextInt();
                 switch (choice) {
                     case 1 -> commands.addBook();

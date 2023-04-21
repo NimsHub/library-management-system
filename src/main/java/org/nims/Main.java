@@ -1,7 +1,12 @@
 package org.nims;
 
-import org.nims.library.*;
-import org.nims.ui.*;
+import org.nims.library.BookRepository;
+import org.nims.library.Library;
+import org.nims.library.Transaction;
+import org.nims.library.TransactionService;
+import org.nims.ui.UI;
+import org.nims.ui.UIContract;
+import org.nims.ui.UIFactory;
 import org.nims.utils.Logger;
 
 public class Main {
