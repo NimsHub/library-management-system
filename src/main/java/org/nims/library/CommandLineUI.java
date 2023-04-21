@@ -5,10 +5,12 @@ import java.util.Scanner;
 public class CommandLineUI implements UserInterface{
     @Override
     public void show() {
+      
         Logger logger = new Logger();
         BookRepository bookDb = BookRepository.getInstance();
         Transaction transactionService = new TransactionService(bookDb,logger);
         Library library = new Library(transactionService);
+
         try (Scanner scanner = new Scanner(System.in)) {
             while (true) {
                 System.out.println("1. Add Book");
