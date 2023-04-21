@@ -92,4 +92,14 @@ public class TransactionService implements Transaction{
                 .filter(Book::isBorrowed)
                 .toList();
     }
+
+    @Override
+    public List<String> overdueBooks() {
+        LocalDate today = LocalDate.now();
+        LocalDate currentDate = today.plusDays(1);
+        return  bookRepository.borrowedBooks.stream()
+                .filter(borrowedBook -> borrowedBook.getDueDate().isBefore(currentDate))
+                .map(BorrowedBook::toString)
+                .toList();
+    }
 }

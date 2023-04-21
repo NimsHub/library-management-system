@@ -40,5 +40,9 @@ public class Main {
 
         logger.info(String.format("available books : %s",
                 library.availableBooks().toString()));
+
+        logger.info(String.format("overdue books : %s",
+                library.overdueBooks().toString()));
+
     }
 }
