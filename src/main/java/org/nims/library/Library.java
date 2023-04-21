@@ -35,5 +35,8 @@ public class Library {
     public List<String > overdueBooks(){
         return transactionService.overdueBooks();
     }
+    public Book getBookById(int id) {
+        return transactionService.getBookById(id);
+    }
 }
 

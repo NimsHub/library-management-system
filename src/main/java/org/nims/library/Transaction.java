@@ -10,5 +10,6 @@ public interface Transaction {
     List<Book> availableBooks();
     List<Book> borrowedBooks();
     List<String> overdueBooks();
+    Book getBookById(int id);
 
 }
