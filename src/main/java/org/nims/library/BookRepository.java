@@ -19,5 +19,4 @@ public class BookRepository {
         }
         return instance;
     }
-
 }
