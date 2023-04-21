@@ -9,4 +9,7 @@ public interface Transaction {
     void returnBook(Book book);
     List<Book> availableBooks();
     List<Book> borrowedBooks();
+    List<String> overdueBooks();
+    Book getBookById(int id);
+
 }

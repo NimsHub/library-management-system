@@ -2,6 +2,8 @@ package org.nims.library;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
+
 /**
 This service class includes the functionalities for basic transactions with the library
  */
@@ -91,5 +93,23 @@ public class TransactionService implements Transaction{
         return bookRepository.books.stream()
                 .filter(Book::isBorrowed)
                 .toList();
+    }
+
+    @Override
+    public List<String> overdueBooks() {
+        LocalDate today = LocalDate.now();
+        LocalDate currentDate = today.plusDays(1);
+        return  bookRepository.borrowedBooks.stream()
+                .filter(borrowedBook -> borrowedBook.getDueDate().isBefore(currentDate))
+                .map(BorrowedBook::toString)
+                .toList();
+    }
+
+    @Override
+    public Book getBookById(int id) {
+        Optional<Book> book = bookRepository.books.stream()
+                .filter(a -> a.getId() == id)
+                .findFirst();
+        return book.orElse(null); // return the book if present, or null otherwise
     }
 }
