@@ -1,10 +1,21 @@
-package org.nims.library;
+package org.nims.entities;
+
+import org.nims.entities.Book;
 
 import java.time.LocalDate;
 
-public class BorrowedBook {
+public class Borrowings {
     private Book book;
     private LocalDate dueDate;
+
+    public void setBorrower(String borrower) {
+        this.borrower = borrower;
+    }
+
+    public String getBorrower() {
+        return borrower;
+    }
+
     private String borrower;
 
     public Book getBook() {
