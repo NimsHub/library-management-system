@@ -1,21 +1,21 @@
-package library;
+package org.nims.library;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Db {
-    private static Db instance;
+public class BookRepository {
+    private static BookRepository instance;
     List<Book> books;
     List<BorrowedBook> borrowedBooks;
 
-    private Db() {
+    private BookRepository() {
         books = new ArrayList<>();
         borrowedBooks = new ArrayList<>();
     }
 
-    public static synchronized Db getInstance() {
+    public static synchronized BookRepository getInstance() {
         if (instance == null) {
-            instance = new Db();
+            instance = new BookRepository();
         }
         return instance;
     }

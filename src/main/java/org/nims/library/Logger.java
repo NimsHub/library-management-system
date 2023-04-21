@@ -1,9 +1,12 @@
-package library;
+package org.nims.library;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.logging.Level;
 
+/**
+ * This class act as a helper by logging capabilities to other services
+ */
 public class Logger {
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
@@ -12,9 +15,7 @@ public class Logger {
         System.out.print(formattedMessage);
     }
 
-    public void info(String message) {
-        log(Level.INFO, message);
-    }
+    public void info(String message) {log(Level.INFO, message);}
 
     public void warn(String message) {log(Level.WARNING, message);}
 

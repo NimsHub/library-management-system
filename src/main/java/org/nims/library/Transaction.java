@@ -1,4 +1,4 @@
-package library;
+package org.nims.library;
 
 import java.util.List;
 
@@ -7,6 +7,6 @@ public interface Transaction {
     void removeBook(Book book);
     void borrowBook(Book book);
     void returnBook(Book book);
-    List<Book> availabeBooks();
+    List<Book> availableBooks();
     List<Book> borrowedBooks();
 }

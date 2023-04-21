@@ -1,10 +1,12 @@
-import library.*;
+package org.nims;
 
+import org.nims.library.*;
 
 public class Main {
     public static void main(String[] args) {
+
         Logger logger = new Logger();
-        Db bookDb = Db.getInstance();
+        BookRepository bookDb = BookRepository.getInstance();
         Transaction transactionService = new TransactionService(bookDb,logger);
         Library library = new Library(transactionService);
 
@@ -23,20 +25,20 @@ public class Main {
         library.borrowBook(book1);
         library.borrowBook(book2);
 
-        System.out.println("available books");
-        System.out.println(library.availableBooks());
+        logger.info(String.format("available books : %s",
+                library.availableBooks().toString()));
 
-        System.out.println("borrowed books");
-        System.out.println(library.borrowedBooks());
+        logger.info(String.format("borrowed books : %s",
+                library.borrowedBooks().toString()));
 
         library.returnBook(book1);
-        System.out.println("available books");
-        System.out.println(library.availableBooks());
+
+        logger.info(String.format("available books : %s",
+                library.availableBooks().toString()));
 
         library.removeBook(book3);
 
-        System.out.println("available books");
-        System.out.println(library.availableBooks());
-
+        logger.info(String.format("available books : %s",
+                library.availableBooks().toString()));
     }
 }

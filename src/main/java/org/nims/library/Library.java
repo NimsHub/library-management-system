@@ -1,4 +1,4 @@
-package library;
+package org.nims.library;
 
 import java.util.List;
 
@@ -26,7 +26,7 @@ public class Library {
     }
 
     public List<Book> availableBooks(){
-       return transactionService.availabeBooks();
+       return transactionService.availableBooks();
     }
 
     public List<Book> borrowedBooks(){
