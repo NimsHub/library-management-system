@@ -1,11 +1,17 @@
 package org.nims.library;
 
+import org.nims.entities.Book;
+import org.nims.entities.Borrowings;
+import org.nims.exceptions.BookNotFoundException;
+import org.nims.utils.Logger;
+
 import java.time.LocalDate;
 import java.util.List;
+
 /**
-This service class includes the functionalities for basic transactions with the library
+ * This service class includes the functionalities for basic transactions with the library
  */
-public class TransactionService implements Transaction{
+public class TransactionService implements Transaction {
     private final BookRepository bookRepository;
     private final Logger logger;
 
@@ -16,80 +22,124 @@ public class TransactionService implements Transaction{
 
     /**
      * This method add books to the library
-     * @param newBook : Book
+     *
+     * @param title  : String
+     * @param author : String
      */
     @Override
-    public void addBook(Book newBook) {
+    public void addBook(String title, String author) {
+        Book newBook = new Book.BookBuilder().title(title).author(author).build();
         bookRepository.books.add(newBook);
         logger.info("new book has been added");
     }
 
     /**
      * This method remove books from the library
-     * @param book : Book
+     *
+     * @param id : Integer
      */
     @Override
-    public void removeBook(Book book) {
+    public void removeBook(Integer id) {
+        Book book = getBookById(id);
         bookRepository.books.remove(book);
         logger.info("book has been removed");
     }
+
     /**
      * This method illustrates borrowing a book from the library
-     * @param book : Book
+     *
+     * @param id : Integer
      */
     @Override
-    public void borrowBook(Book book) {
+    public void borrowBook(Integer id,String borrower) {
+        Book book = getBookById(id);
         bookRepository.books.stream()
                 .filter(a -> a.getId() == book.getId())
                 .findAny()
-                .ifPresent(a-> a.setBorrowed(true));
+                .ifPresent(a -> a.setBorrowed(true));
 
-        BorrowedBook borrowedBook = new BorrowedBook();
-        borrowedBook.setBook(book);
-        borrowedBook.setDueDate(LocalDate.now());
+        Borrowings borrowings = new Borrowings();
+        borrowings.setBook(book);
+        borrowings.setBorrower(borrower);
+        borrowings.setDueDate(LocalDate.now().plusDays(1));
 
-        bookRepository.borrowedBooks.add(borrowedBook);
+        bookRepository.borrowings.add(borrowings);
         logger.info("book has been borrowed");
     }
+
     /**
      * This method illustrates returning borrowed book to the library
-     * @param book : Book
+     *
+     * @param id : Integer
      */
     @Override
-    public void returnBook(Book book) {
+    public void returnBook(Integer id) {
+        Book book = getBookById(id);
         bookRepository.books.stream()
                 .filter(a -> a.getId() == book.getId())
                 .findAny()
-                .ifPresent(a-> a.setBorrowed(false));
+                .ifPresent(a -> a.setBorrowed(false));
 
-        bookRepository.borrowedBooks.remove(
-                bookRepository.borrowedBooks.stream()
+        bookRepository.borrowings.remove(
+                bookRepository.borrowings.stream()
                         .filter(a -> a.getBook() == book)
                         .findAny()
-                        .orElseThrow(()-> new RuntimeException("no such borrowings")));
+                        .orElseThrow(() -> new RuntimeException("no such borrowings")));
 
         logger.info("book has been returned");
     }
 
     /**
      * This method retrieves all the available books in the library
+     *
      * @return List<Book>
      */
     @Override
     public List<Book> availableBooks() {
+        logger.info("available books");
         return bookRepository.books.stream()
-                .filter(a-> !a.isBorrowed())
+                .filter(a -> !a.isBorrowed())
                 .toList();
     }
 
     /**
      * This method retrieves all the borrowed books from the library
+     *
      * @return : List<Book>
      */
     @Override
-    public List<Book> borrowedBooks() {
-        return bookRepository.books.stream()
-                .filter(Book::isBorrowed)
+    public List<Borrowings> borrowedBooks() {
+        logger.info("borrowed books");
+        return bookRepository.borrowings.stream()
+                .filter(a -> a.getBook().isBorrowed())
                 .toList();
+    }
+
+    /**
+     * This method retrieves overdue Books
+     *
+     * @return : List<Borrowings>
+     */
+    @Override
+    public List<Borrowings> overdueBooks() {
+        logger.info("overdue books");
+        LocalDate today = LocalDate.now();
+        return bookRepository.borrowings.stream()
+                .filter(borrowedBook -> borrowedBook.getDueDate().isBefore(today))
+                .toList();
+    }
+
+    /**
+     * This method retrieves book by its id
+     *
+     * @param id : Integer
+     * @return : Book
+     */
+    @Override
+    public Book getBookById(Integer id) {
+        return bookRepository.books.stream()
+                .filter(a -> a.getId() == id)
+                .findAny()
+                .orElseThrow(() -> new BookNotFoundException("Book not Found"));
     }
 }

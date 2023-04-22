@@ -1,12 +1,18 @@
 package org.nims.library;
 
+import org.nims.entities.Book;
+import org.nims.entities.Borrowings;
+
 import java.util.List;
 
 public interface Transaction {
-    void addBook(Book book);
-    void removeBook(Book book);
-    void borrowBook(Book book);
-    void returnBook(Book book);
+    void addBook(String title,String author);
+    void removeBook(Integer id);
+    void borrowBook(Integer id,String borrower);
+    void returnBook(Integer id);
     List<Book> availableBooks();
-    List<Book> borrowedBooks();
+    List<Borrowings> borrowedBooks();
+    List<Borrowings> overdueBooks();
+    Book getBookById(Integer id);
+
 }
