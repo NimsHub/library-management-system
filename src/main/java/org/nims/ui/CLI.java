@@ -1,7 +1,6 @@
 package org.nims.ui;
 
-import org.nims.commands.CliCommands;
-import org.nims.commands.Commands;
+import org.nims.commands.*;
 import org.nims.constants.Constants;
 import org.nims.library.Library;
 import org.nims.utils.Logger;
@@ -11,11 +10,17 @@ import java.util.Scanner;
 public class CLI implements UIContract {
     Logger logger = new Logger();
     int choice;
-    private final Commands commands;
+    // private final Commands commands;
+    private final AddRemoveBooks addRemoveBooks;
+    private final BorrowReturnBooks borrowReturnBooks;
+    private final ShowBooks showBooks;
     Scanner scanner = new Scanner(System.in);
 
     public CLI(Library library) {
-        this.commands = new CliCommands(scanner, library);
+        // this.commands = new CliCommands(scanner, library);
+        this.addRemoveBooks =new AddRemoveBooksCommands(scanner, library);
+        this.borrowReturnBooks =new BorrowReturnBooksCommands(scanner, library);
+        this.showBooks =new ShowBooksCommands(scanner, library);
     }
 
     @Override
@@ -26,13 +31,13 @@ public class CLI implements UIContract {
                 logger.info(Constants.PROMPT);
                 choice = scanner.nextInt();
                 switch (choice) {
-                    case 1 -> commands.addBook();
-                    case 2 -> commands.removeBook();
-                    case 3 -> commands.availableBooks();
-                    case 4 -> commands.borrowBook();
-                    case 5 -> commands.returnBook();
-                    case 6 -> commands.borrowedBooks();
-                    case 7 -> commands.overdueBooks();
+                    case 1 -> addRemoveBooks.addBook();
+                    case 2 -> addRemoveBooks.removeBook();
+                    case 3 -> showBooks.availableBooks();
+                    case 4 -> borrowReturnBooks.borrowBook();
+                    case 5 -> borrowReturnBooks.returnBook();
+                    case 6 -> showBooks.borrowedBooks();
+                    case 7 -> showBooks.overdueBooks();
                     default -> logger.warn("Invalid Input");
                 }
             } while (choice != 8);
