@@ -1,7 +1,7 @@
 package org.nims.commands;
 
 /**
- * This interface has been used to implement Command Pattern
+ * This interface has been used to create a contract for gui and cli commands
  */
 public interface Commands {
     /**

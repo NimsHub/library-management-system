@@ -2,6 +2,7 @@ package org.nims.ui;
 
 import org.nims.commands.Commands;
 import org.nims.commands.GuiCommands;
+import org.nims.commands.Commander;
 import org.nims.library.Library;
 
 import javax.swing.*;
@@ -11,8 +12,10 @@ import java.awt.*;
 
 public class GUI implements UIContract {
     private final Library library;
-    public GUI(Library library){
+    private final Commander commander;
+    public GUI(Library library, Commander commander){
         this.library = library;
+        this.commander = commander;
     }
 
     @Override
@@ -85,21 +88,21 @@ public class GUI implements UIContract {
         /*----------------------------------------- End UI Template ------------------------------------- */
 
         /* Initializing commands */
-        Commands commands = new GuiCommands(
+        Commands guiCommands = new GuiCommands(
                 frame,
                 library,
                 booksTable,
                 borrowedBooksTable
         );
 
-        addButton.addActionListener(e -> commands.addBook());
-        borrowButton.addActionListener(e -> commands.borrowBook());
-        removeButton.addActionListener(e -> commands.removeBook());
-        returnBook.addActionListener(e -> commands.returnBook());
-        overdueBooks.addActionListener(e -> commands.overdueBooks());
+        addButton.addActionListener(e -> commander.getCommand(guiCommands::addBook));
+        borrowButton.addActionListener(e -> commander.getCommand(guiCommands::borrowBook));
+        removeButton.addActionListener(e -> commander.getCommand(guiCommands::removeBook));
+        returnBook.addActionListener(e -> commander.getCommand(guiCommands::returnBook));
+        overdueBooks.addActionListener(e -> commander.getCommand(guiCommands::overdueBooks));
 
         /* Data initialization */
-        commands.availableBooks();
-        commands.borrowedBooks();
+        guiCommands.availableBooks();
+        guiCommands.borrowedBooks();
     }
 }
