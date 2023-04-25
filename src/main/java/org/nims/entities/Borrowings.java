@@ -6,6 +6,12 @@ public class Borrowings {
     private Book book;
     private LocalDate dueDate;
 
+
+    private Borrowings(BorrowingsBuilder borrowingsBuilder) {
+        this.book = borrowingsBuilder.book;
+        this.dueDate = borrowingsBuilder.dueDate;
+    }
+
     public void setBorrower(String borrower) {
         this.borrower = borrower;
     }
@@ -37,5 +43,29 @@ public class Borrowings {
         return "Book: " +"{ id=" + book.getId() + ", title="+ book.getTitle()+", author= "+book.getAuthor() +"}"+
                 ", Due Date: " + dueDate +
                 ", Borrower: " + borrower;
+    }
+    
+    /**
+     * Builder Pattern implementation for BorrowingBook entity
+     */
+
+     public static class BorrowingsBuilder {
+        private Book book;
+        private LocalDate dueDate;
+
+        public BorrowingsBuilder book(Book book) {
+            this.book = book;
+            return this;
+        }
+
+        public BorrowingsBuilder dueDate(LocalDate dueDate) {
+            this.dueDate = dueDate;
+            return this;
+        }
+
+
+        public Borrowings build() {
+            return new Borrowings(this);
+        }
     }
 }
