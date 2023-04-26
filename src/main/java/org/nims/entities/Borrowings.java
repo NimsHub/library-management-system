@@ -5,11 +5,12 @@ import java.time.LocalDate;
 public class Borrowings {
     private Book book;
     private LocalDate dueDate;
-
+    private String borrower;
 
     private Borrowings(BorrowingsBuilder borrowingsBuilder) {
         this.book = borrowingsBuilder.book;
         this.dueDate = borrowingsBuilder.dueDate;
+        this.borrower =borrowingsBuilder.borrower;
     }
 
     public void setBorrower(String borrower) {
@@ -19,8 +20,6 @@ public class Borrowings {
     public String getBorrower() {
         return borrower;
     }
-
-    private String borrower;
 
     public Book getBook() {
         return book;
@@ -52,6 +51,7 @@ public class Borrowings {
      public static class BorrowingsBuilder {
         private Book book;
         private LocalDate dueDate;
+        private String borrower;
 
         public BorrowingsBuilder book(Book book) {
             this.book = book;
@@ -63,7 +63,10 @@ public class Borrowings {
             return this;
         }
 
-
+        public BorrowingsBuilder borrower(String borrower) {
+            this.borrower = borrower;
+            return this;
+        }
         public Borrowings build() {
             return new Borrowings(this);
         }
