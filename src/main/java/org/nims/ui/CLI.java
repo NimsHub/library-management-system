@@ -11,11 +11,19 @@ import java.util.Scanner;
 public class CLI implements UIContract {
     Logger logger = new Logger();
     int choice;
+    private static CLI instance = null; // create a static instance variable
     private final Commands commands;
     Scanner scanner = new Scanner(System.in);
 
-    public CLI(Library library) {
+    private CLI(Library library) { // make the constructor private
         this.commands = new CliCommands(scanner, library);
+    }
+    
+    public static CLI getInstance(Library library) { // create a public static method to get the instance
+        if (instance == null) {
+            instance = new CLI(library);
+        }
+        return instance;
     }
 
     @Override

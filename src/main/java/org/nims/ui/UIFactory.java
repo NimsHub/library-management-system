@@ -9,7 +9,11 @@ public class UIFactory {
         this.library = library;
     }
     public UIContract getUI(UI ui) {
-        if (ui == UI.CLI) return new CLI(library);
-        else return new GUI(library);
+        if (ui == UI.CLI)
+        {
+            CLI cli = CLI.getInstance(library);
+            return cli;
+        }
+        else{ return new GUI(library);}
     }
 }
