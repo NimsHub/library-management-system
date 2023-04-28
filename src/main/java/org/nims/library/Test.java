@@ -8,8 +8,22 @@ import java.util.List;
 import org.nims.entities.Book;
 import org.nims.entities.Borrowings;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+
 public class Test {
     public static void main(String[] args) throws SQLException {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("library");
+        EntityManager em = emf.createEntityManager();
+
+        em.getTransaction().begin();
+
+        em.getTransaction().commit();
+
+        em.close();
+        emf.close();
+
         String jdbcUrl = "jdbc:sqlite:library.db";
         Connection connection = DriverManager.getConnection(jdbcUrl);
 
