@@ -20,6 +20,18 @@
             <artifactId>sqlite-jdbc</artifactId>
             <version>3.41.2.1</version>
         </dependency>
+        <dependency>
+            <groupId>androidx.sqlite</groupId>
+            <artifactId>sqlite-framework</artifactId>
+            <version>2.3.0</version>
+        </dependency>
     </dependencies>
+    <repositories>
+        <repository>
+            <id>gmaven</id>
+            <name>Google Maven</name>
+            <url>https://maven.google.com/</url>
+        </repository>
+    </repositories>
 
 </project>
