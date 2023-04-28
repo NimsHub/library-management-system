@@ -1,4 +1,4 @@
-package org.nims.library;
+package org.nims.utils;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
