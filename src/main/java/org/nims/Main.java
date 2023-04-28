@@ -1,5 +1,6 @@
 package org.nims;
 
+import org.nims.commands.Commander;
 import org.nims.library.BookRepository;
 import org.nims.library.Library;
 import org.nims.library.Transaction;
@@ -15,6 +16,7 @@ public class Main {
         BookRepository bookDb = BookRepository.getInstance();
         Transaction transactionService = new TransactionService(bookDb,logger);
         Library library = new Library(transactionService);
+        Commander manager = new Commander();
 
         library.addBook("title 1","author 1");
         library.addBook("title 2","author 2");
@@ -22,8 +24,8 @@ public class Main {
         library.addBook("title 4","author 4");
         library.addBook("title 5","author 5");
 
-        UIFactory uiFactory = new UIFactory(library);
-        UIContract ui = uiFactory.getUI(UI.CLI);
+        UIFactory uiFactory = new UIFactory(library, manager);
+        UIContract ui = uiFactory.getUI(UI.CLI,manager);
         ui.show();
 
     }

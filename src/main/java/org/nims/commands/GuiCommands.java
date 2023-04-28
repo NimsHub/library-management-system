@@ -134,8 +134,8 @@ public class GuiCommands implements Commands {
             borrowedModel.addRow(new Object[]{
                     a.getBook().getId(),
                     a.getBook().getTitle(),
-                    a.getBook().getAuthor(),
-                    a.getBook().isBorrowed()});
+                    a.getBorrower(),
+                    a.getDueDate()});
         }
     }
 }
