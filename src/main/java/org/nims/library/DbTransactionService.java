@@ -9,6 +9,7 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class DbTransactionService implements Transaction{
     private final StaticDb repository;
@@ -42,15 +43,21 @@ public class DbTransactionService implements Transaction{
 
     @Override
     public void borrowBook(Integer id, String borrower) {
-        String booksql = "UPDATE books SET isBorrowed = true WHERE id = "+id;
-        String borrowsql = "INSERT INTO borrowings (book, dueDate, borrower) VALUES (%d, '%s', '%s')".formatted(getBookById(id).getId(), LocalDate.now().plusDays(1), borrower);
-        try {
-            quaryRunner(repository.connection,booksql);
-            quaryRunner(repository.connection,borrowsql);
-            logger.info("book has been borrowed");
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        Optional<Book> book = Optional.ofNullable(getBookById(id));
+        book.filter(b -> !b.isBorrowed())
+                .ifPresentOrElse(b -> {
+                    String booksql = "UPDATE books SET isBorrowed = true WHERE id = " + id;
+                    String borrowsql = "INSERT INTO borrowings (book, dueDate, borrower) VALUES (%d, '%s', '%s')".formatted(getBookById(id).getId(), LocalDate.now().plusDays(1), borrower);
+                    try {
+                        quaryRunner(repository.connection, booksql);
+                        quaryRunner(repository.connection, borrowsql);
+                        logger.info("book has been borrowed");
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
+                }, () -> {
+                    logger.info("Book is not available for borrowing");
+                });
     }
 
     @Override
@@ -155,13 +162,5 @@ public class DbTransactionService implements Transaction{
         }
 
         return borrowings;
-    }
-
-    public static Book CreatData(String title, String author) {
-        return new Book.BookBuilder()
-                .title(title)
-                .author(author)
-                .isBorrowed(false)
-                .build();
     }
 }
