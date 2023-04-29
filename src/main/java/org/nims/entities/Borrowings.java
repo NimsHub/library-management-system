@@ -43,7 +43,10 @@ public class Borrowings {
                 ", Due Date: " + dueDate +
                 ", Borrower: " + borrower;
     }
-    
+
+    public void setId(String id) {
+    }
+
     /**
      * Builder Pattern implementation for BorrowingBook entity
      */
@@ -71,4 +74,5 @@ public class Borrowings {
             return new Borrowings(this);
         }
     }
+
 }

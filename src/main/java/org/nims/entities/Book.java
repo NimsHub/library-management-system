@@ -46,6 +46,10 @@ public class Book {
                 '}';
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     /**
      * Builder Pattern implementation for Book entity
      */
