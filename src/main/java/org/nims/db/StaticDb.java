@@ -1,16 +1,11 @@
 package org.nims.db;
 
-import org.nims.entities.Book;
-import org.nims.entities.Borrowings;
-import org.nims.library.BookRepository;
-
-import java.lang.reflect.Field;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class StaticDb {
+public class StaticDb implements Db{
     private static StaticDb instance;
     public Connection connection;
     private StaticDb() throws SQLException {
@@ -24,8 +19,8 @@ public class StaticDb {
             Statement statement = connection.createStatement();
             statement.executeUpdate("CREATE DATABASE IF NOT EXISTS " + databaseName);
             statement.executeUpdate("USE " + databaseName);
-            createTables(connection);
             this.connection = connection;
+            createStorage();
         } catch (SQLException e) {
             System.err.println("Error creating database: " + e.getMessage());
         }
@@ -40,10 +35,14 @@ public class StaticDb {
         }
         return instance;
     }
-
-    public static void createTables(Connection connection) throws SQLException {
-        createBookTable(connection);
-        createBorrowingsTable(connection);
+    @Override
+    public void createStorage() {
+        try {
+            createBookTable(this.connection);
+            createBorrowingsTable(this.connection);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public static void createBookTable(Connection connection) throws SQLException {
