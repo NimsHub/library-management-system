@@ -14,4 +14,19 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.xerial</groupId>
+            <artifactId>sqlite-jdbc</artifactId>
+            <version>3.41.2.1</version>
+        </dependency>
+    </dependencies>
+    <repositories>
+        <repository>
+            <id>gmaven</id>
+            <name>Google Maven</name>
+            <url>https://maven.google.com/</url>
+        </repository>
+    </repositories>
+
 </project>
