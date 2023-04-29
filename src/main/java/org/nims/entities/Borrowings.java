@@ -44,7 +44,7 @@ public class Borrowings {
                 ", Borrower: " + borrower;
     }
 
-    public void setId(String book) {
+    public void setId(String id) {
     }
 
     /**

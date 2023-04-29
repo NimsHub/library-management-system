@@ -14,8 +14,10 @@ public class StaticDb {
     private static StaticDb instance;
     public Connection connection;
     private StaticDb() throws SQLException {
-        String jdbcUrl = "jdbc:sqlite:library.db";
-        connection = DriverManager.getConnection(jdbcUrl);
+        String jdbcUrl = "jdbc:mysql://localhost:3306/testdb?useSSL=false&serverTimezone=UTC";
+        String username = "user";
+        String password = "mypassword";
+        this.connection = DriverManager.getConnection(jdbcUrl, username, password);
         createTables(connection);
     }
     public static synchronized StaticDb getInstance(){
@@ -36,51 +38,28 @@ public class StaticDb {
 
     public static void createBookTable(Connection connection) throws SQLException {
         String tableName = "books";
-        StringBuilder sqlBuilder = new StringBuilder();
-        sqlBuilder.append("CREATE TABLE IF NOT EXISTS ").append(tableName).append(" (");
-
-        Field[] fields = Book.class.getDeclaredFields();
-        for (Field field : fields) {
-            String fieldName = field.getName();
-            String fieldType = field.getType().getSimpleName().toUpperCase();
-            String columnName = fieldName;
-            if (fieldName.equals("isBorrowed")) {
-                columnName = "borrowed";
-            }
-            String columnDefinition = columnName + " " + fieldType;
-            if (fieldName.equals("id")) {
-                columnDefinition += " INTEGER PRIMARY KEY AUTOINCREMENT, ";
-            } else {
-                columnDefinition += ", ";
-            }
-            sqlBuilder.append(columnDefinition);
-        }
-
-        sqlBuilder.setLength(sqlBuilder.length() - 2);
-        sqlBuilder.append(")");
-
+        String sql = "CREATE TABLE IF NOT EXISTS " + tableName + " ("
+                + "id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,"
+                + "title VARCHAR(255),"
+                + "author VARCHAR(255),"
+                + "isBorrowed INT(1)"
+                + ");";
         Statement statement = connection.createStatement();
-        statement.execute(sqlBuilder.toString());
+        statement.execute(sql);
     }
 
     public static void createBorrowingsTable(Connection connection) throws SQLException {
+
         String tableName = "borrowings";
-        StringBuilder sqlBuilder = new StringBuilder();
-        sqlBuilder.append("CREATE TABLE IF NOT EXISTS ").append(tableName).append(" (");
-
-        Field[] fields = Borrowings.class.getDeclaredFields();
-        for (Field field : fields) {
-            String fieldName = field.getName();
-            String fieldType = field.getType().getSimpleName().toUpperCase();
-            String columnName = fieldName;
-            String columnDefinition = columnName + " " + fieldType + ", ";
-            sqlBuilder.append(columnDefinition);
-        }
-
-        sqlBuilder.setLength(sqlBuilder.length() - 2);
-        sqlBuilder.append(")");
-
+        String sql = "CREATE TABLE IF NOT EXISTS " + tableName + " ("
+                + "id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,"
+                + "dueDate DATE,"
+                + "borrower VARCHAR(255),"
+                + "book INT(11) NOT NULL,"
+                + "FOREIGN KEY (book) REFERENCES books(id)"
+                + ");";
         Statement statement = connection.createStatement();
-        statement.execute(sqlBuilder.toString());
+        statement.execute(sql);
+
     }
 }
