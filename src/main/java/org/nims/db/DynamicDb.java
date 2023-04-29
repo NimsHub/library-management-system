@@ -9,8 +9,8 @@ import java.util.List;
 
 public class DynamicDb {
     private static DynamicDb instance;
-    List<Book> books;
-    List<Borrowings> borrowings;
+    public List<Book> books;
+    public List<Borrowings> borrowings;
     private DynamicDb() {
         books = new ArrayList<>();
         borrowings = new ArrayList<>();

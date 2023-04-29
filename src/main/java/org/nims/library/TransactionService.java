@@ -1,5 +1,6 @@
 package org.nims.library;
 
+import org.nims.db.DynamicDb;
 import org.nims.entities.Book;
 import org.nims.entities.Borrowings;
 import org.nims.exceptions.BookNotFoundException;
@@ -12,10 +13,10 @@ import java.util.List;
  * This service class includes the functionalities for basic transactions with the library
  */
 public class TransactionService implements Transaction {
-    private final BookRepository bookRepository;
+    private final DynamicDb bookRepository;
     private final Logger logger;
 
-    public TransactionService(BookRepository bookRepository, Logger logger) {
+    public TransactionService(DynamicDb bookRepository, Logger logger) {
         this.bookRepository = bookRepository;
         this.logger = logger;
     }
