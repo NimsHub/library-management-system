@@ -51,22 +51,32 @@ public class TransactionService implements Transaction {
      * @param id : Integer
      */
     @Override
-    public void borrowBook(Integer id,String borrower) {
-        Book book = getBookById(id);
-        bookRepository.books.stream()
+    public void borrowBook(Integer id, String borrower) {
+        try {
+            Book book = getBookById(id);
+            if (book == null) {
+                throw new Exception("Book ID not found");
+            }
+            
+            bookRepository.books.stream()
                 .filter(a -> a.getId() == book.getId())
                 .findAny()
                 .ifPresent(a -> a.setBorrowed(true));
-
-                Borrowings borrowings = new Borrowings.BorrowingsBuilder()
+    
+            Borrowings borrowings = new Borrowings.BorrowingsBuilder()
                 .book(book)
                 .borrower(borrower)
                 .dueDate(LocalDate.now().plusDays(1))
                 .build();
-
-        bookRepository.borrowings.add(borrowings);
-        logger.info("book has been borrowed");
+                    
+            bookRepository.borrowings.add(borrowings);
+            logger.info("book has been borrowed");
+        } catch (Exception e) {
+            // code to handle the exception
+            System.out.println(e.getMessage());
+        }
     }
+    
 
     /**
      * This method illustrates returning borrowed book to the library
