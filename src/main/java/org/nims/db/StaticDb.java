@@ -14,11 +14,21 @@ public class StaticDb {
     private static StaticDb instance;
     public Connection connection;
     private StaticDb() throws SQLException {
-        String jdbcUrl = "jdbc:mysql://localhost:3306/testdb?useSSL=false&serverTimezone=UTC";
+        String jdbcUrl = "jdbc:mysql://localhost:3306/?useSSL=false&serverTimezone=UTC";
         String username = "user";
         String password = "mypassword";
-        this.connection = DriverManager.getConnection(jdbcUrl, username, password);
-        createTables(connection);
+        String databaseName = "testdb50";
+
+        try{
+            Connection connection = DriverManager.getConnection(jdbcUrl, username, password);
+            Statement statement = connection.createStatement();
+            statement.executeUpdate("CREATE DATABASE IF NOT EXISTS " + databaseName);
+            statement.executeUpdate("USE " + databaseName);
+            createTables(connection);
+            this.connection = connection;
+        } catch (SQLException e) {
+            System.err.println("Error creating database: " + e.getMessage());
+        }
     }
     public static synchronized StaticDb getInstance(){
         if (instance == null) {
