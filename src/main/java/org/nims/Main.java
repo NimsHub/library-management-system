@@ -13,11 +13,9 @@ public class Main {
     public static void main(String[] args) {
         Logger logger = new Logger();
 
-//        DynamicDb dataRepo = DynamicDb.getInstance();
-//        Transaction transactionService = new TransactionService(dataRepo,logger);
-
-        StaticDb dataRepo = StaticDb.getInstance();
-        Transaction transactionService = new DbTransactionService(dataRepo,logger);
+        DynamicDb dataRepo = DynamicDb.getInstance();
+//        StaticDb dataRepo = StaticDb.getInstance();
+        Transaction transactionService = TransactionFactory.TransactionFactory(logger,dataRepo);
 
         Library library = new Library(transactionService);
         Commander manager = new Commander();
